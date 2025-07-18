@@ -1,0 +1,27 @@
+{
+    "position": "Praktikum in der IT-Abteilung",
+    "company": "TechNova GmbH",
+    "location": "Hamburg",
+    "start_date": "ab sofort",
+    "duration": "3-6 Monate",
+    "responsibilities": [
+        "Unterstützung der IT-Abteilung im Tagesgeschäft",
+        "Installation und Wartung von Hard- und Software",
+        "Mitarbeit an IT-Projekten",
+        "Dokumentation technischer Prozesse"
+    ],
+    "profile": {
+        "interest_in_it": "Ja",
+        "network_knowledge": "Grundkenntnisse",
+        "attention_to_detail": "Ja",
+        "team_work": "Ja"
+    },
+    "benefits": {
+        "project_insight": "Ja",
+        "modern_work_environment": "Ja",
+        "mentorship": "Ja",
+        "job_training": "Ja"
+    },
+    "application_email": "jobs@technova.de",
+    "application_subject": "Praktikum IT - [Dein Name]"
+}

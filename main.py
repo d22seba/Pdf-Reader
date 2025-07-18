@@ -1,4 +1,5 @@
 from ollama import Client
+import subprocess
 import json
 import os
 import pdfplumber
@@ -34,28 +35,35 @@ def extract_all_pdfs_text():
     for pdf in pdfs:
         all_texts += extract_text_from_pdf(pdf) + "\n"
         all_texts = clean_text(all_texts)
-    return list(all_texts)
+    return all_texts
 
-def analyze_text_with_ollama(text):
-    prompt = (
-        "Extrahiere aus diesem Stellenanzeigen-Text die wichtigsten Jobinformationen "
-    )
 
-    response = client.chat(model="qwen:1.8b", messages=[
-        {
-            "role": "user",
-            "content": prompt
-        }
-    ])
 
-    print("🔵 Antwort von Ollama:")
-    print(response["message"]["content"])
-    
+def ask_ollama(prompt: str) -> str:
+    mainpromt = """Extrahiere wichtige Informationen aus folgendem 
+    Stellenanzeige es soll sachen rausfiltern damit 
+    man ihn einsortieren kann und gib sie als JSON aus der die values als liste ausgibt
+    und falls es nicht angegeben ist schreib null und nicht angegeben
+    gib nichts anderes als die JSON aus keinen zusätzlichen Text und halte dich kurz und knapp"""
+    prompt1 = mainpromt + prompt
     try:
-        return json.loads(response["message"]["content"])
-    except json.JSONDecodeError:
-        print("⚠️ Antwort war kein gültiges JSON.")
-        return None
+        result = subprocess.run(
+            ['ollama', 'run', 'qwen3:1.7b', prompt1, "--think=false"],
+            capture_output=True,
+            text=True,
+            check=True
+        )
+        output = result.stdout.strip()
+        print(output)
+        output = json.loads(output)
+
+        with open("daten.json", "w", encoding="utf-8") as f:
+            json.dump(output, f, indent=4, ensure_ascii=False)
+    
+    except subprocess.CalledProcessError as e:
+        return f"Fehler beim Aufruf von Ollama: {e}"
+
+
 
 
 
