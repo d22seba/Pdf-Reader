@@ -1,11 +1,8 @@
-from ollama import Client
 import subprocess
 import json
 import os
 import pdfplumber
 import re
-
-client = Client()
 
 def clean_text(text):
     text = text.replace('\r', ' ').replace('\n', ' ')
@@ -40,8 +37,8 @@ def extract_all_pdfs_text():
 
 
 def ask_ollama(prompt: str) -> str:
-    mainpromt = """Extrahiere wichtige Informationen aus folgendem 
-    Stellenanzeige es soll sachen rausfiltern damit 
+    mainpromt = """Extrahiere wichtige Informationen aus folgender
+    Stellenanzeige es soll Sachen rausfiltern damit 
     man ihn einsortieren kann und gib sie als JSON aus der die values als liste ausgibt
     und falls es nicht angegeben ist schreib null und nicht angegeben
     gib nichts anderes als die JSON aus keinen zusätzlichen Text und halte dich kurz und knapp"""
@@ -62,9 +59,3 @@ def ask_ollama(prompt: str) -> str:
     
     except subprocess.CalledProcessError as e:
         return f"Fehler beim Aufruf von Ollama: {e}"
-
-
-
-
-
-
